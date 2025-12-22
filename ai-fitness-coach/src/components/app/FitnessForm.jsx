@@ -47,7 +47,7 @@ function FitnessForm({ onSubmit }) {
       fitness_level: "",
       workout_location: "",
       dietary_preferences: "",
-      medical_history: ""
+      medical_history: "",
     },
   });
 
@@ -55,17 +55,24 @@ function FitnessForm({ onSubmit }) {
   const fitnessGoalOptions = fitnessSchema.shape.fitness_goal.options;
   const fitnessLevelOptions = fitnessSchema.shape.fitness_level.options;
   const workoutLocationOptions = fitnessSchema.shape.workout_location.options;
-  const dietaryPreferenceOptions = fitnessSchema.shape.dietary_preferences.options;
+  const dietaryPreferenceOptions =
+    fitnessSchema.shape.dietary_preferences.options;
 
   return (
-    <Card className="w-[90%] md:w-1/2 max-h-[90vh] mx-auto overflow-y-auto">
+    <Card className="w-[90%] lg:w-1/2 max-h-[90vh] mx-auto overflow-y-auto">
       <CardHeader>
         <CardTitle className="sticky text-2xl font-bold text-center text-indigo-500">
           Fitness Form
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          id="form-rhf-demo"
+          onSubmit={form.handleSubmit((data) => {
+            onSubmit(data);
+            // form.reset();
+          })}
+        >
           <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Controller
               name="name"
@@ -128,15 +135,23 @@ function FitnessForm({ onSubmit }) {
                   >
                     Gender
                   </FieldLabel>
-                  <Select value={field.value} id="form-rhf-demo-gender"
-                    aria-invalid={fieldState.invalid} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value}
+                    id="form-rhf-demo-gender"
+                    aria-invalid={fieldState.invalid}
+                    onValueChange={field.onChange}
+                  >
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select a gender" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Gender</SelectLabel>
-                        { genderOptions.map((option) => <SelectItem key={option} value={option}>{option}</SelectItem>)}
+                        {genderOptions.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -155,7 +170,7 @@ function FitnessForm({ onSubmit }) {
                     htmlFor="form-rhf-demo-height"
                     className="text-indigo-500"
                   >
-                    Height
+                    Height (cm)
                   </FieldLabel>
                   <Input
                     {...field}
@@ -181,7 +196,7 @@ function FitnessForm({ onSubmit }) {
                     htmlFor="form-rhf-demo-weight"
                     className="text-indigo-500"
                   >
-                    Weight
+                    Weight (kg)
                   </FieldLabel>
                   <Input
                     {...field}
@@ -209,15 +224,23 @@ function FitnessForm({ onSubmit }) {
                   >
                     Fitness Goal
                   </FieldLabel>
-                  <Select value={field.value} id="form-rhf-demo-fitness_goal"
-                    aria-invalid={fieldState.invalid} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value}
+                    id="form-rhf-demo-fitness_goal"
+                    aria-invalid={fieldState.invalid}
+                    onValueChange={field.onChange}
+                  >
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select your fitness goal" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Fitness Goal</SelectLabel>
-                        { fitnessGoalOptions.map((option) => <SelectItem key={option} value={option}>{option}</SelectItem>)}
+                        {fitnessGoalOptions.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -238,15 +261,23 @@ function FitnessForm({ onSubmit }) {
                   >
                     Fitness Level
                   </FieldLabel>
-                  <Select value={field.value} id="form-rhf-demo-fitness_level"
-                    aria-invalid={fieldState.invalid} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value}
+                    id="form-rhf-demo-fitness_level"
+                    aria-invalid={fieldState.invalid}
+                    onValueChange={field.onChange}
+                  >
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select your current fitness level" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Fitness Level</SelectLabel>
-                        { fitnessLevelOptions.map((option) => <SelectItem key={option} value={option}>{option}</SelectItem>)}
+                        {fitnessLevelOptions.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -267,15 +298,23 @@ function FitnessForm({ onSubmit }) {
                   >
                     Workout Location
                   </FieldLabel>
-                  <Select value={field.value} id="form-rhf-demo-workout_location"
-                    aria-invalid={fieldState.invalid} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value}
+                    id="form-rhf-demo-workout_location"
+                    aria-invalid={fieldState.invalid}
+                    onValueChange={field.onChange}
+                  >
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select your workout location" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Workout Location</SelectLabel>
-                        { workoutLocationOptions.map((option) => <SelectItem key={option} value={option}>{option}</SelectItem>)}
+                        {workoutLocationOptions.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -296,15 +335,23 @@ function FitnessForm({ onSubmit }) {
                   >
                     Dietary Preferences
                   </FieldLabel>
-                  <Select value={field.value} id="form-rhf-demo-dietary_preferences"
-                    aria-invalid={fieldState.invalid} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value}
+                    id="form-rhf-demo-dietary_preferences"
+                    aria-invalid={fieldState.invalid}
+                    onValueChange={field.onChange}
+                  >
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select your dietary preferences" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Dietary Preferences</SelectLabel>
-                        { dietaryPreferenceOptions.map((option) => <SelectItem key={option} value={option}>{option}</SelectItem>)}
+                        {dietaryPreferenceOptions.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -319,7 +366,10 @@ function FitnessForm({ onSubmit }) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-medical_history" className="text-indigo-500">
+                  <FieldLabel
+                    htmlFor="form-rhf-demo-medical_history"
+                    className="text-indigo-500"
+                  >
                     Medical History
                   </FieldLabel>
                   <InputGroup>
@@ -339,7 +389,8 @@ function FitnessForm({ onSubmit }) {
                     </InputGroupAddon>
                   </InputGroup>
                   <FieldDescription>
-                    Note: Please consult your doctor before starting any exercise. 
+                    Note: Please consult your doctor before starting any
+                    exercise.
                   </FieldDescription>
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
