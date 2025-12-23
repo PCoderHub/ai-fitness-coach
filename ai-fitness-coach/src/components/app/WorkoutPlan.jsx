@@ -46,7 +46,7 @@ export default function WorkoutPlan({ workout, onExerciseClick }) {
         <Card className="flex-1">
           <CardContent className="p-4 text-center">
             <p className="text-sm text-muted-foreground">Days / Week</p>
-            <p className="text-2xl font-bold">{workout.frequency_per_week}</p>
+            <p className="text-2xl font-bold">{workout?.frequency_per_week}</p>
           </CardContent>
         </Card>
 
@@ -54,7 +54,7 @@ export default function WorkoutPlan({ workout, onExerciseClick }) {
           <CardContent className="p-4 text-center">
             <p className="text-sm text-muted-foreground">Session Duration</p>
             <p className="text-2xl font-bold">
-              {workout.session_duration_minutes} min
+              {workout?.session_duration_minutes} min
             </p>
           </CardContent>
         </Card>
@@ -70,49 +70,50 @@ export default function WorkoutPlan({ workout, onExerciseClick }) {
 
       {/* Weekly Schedule */}
       <Accordion type="single" collapsible className="space-y-2">
-        {Object.entries(workout.weekly_schedule).map(([dayKey, day], idx) => (
-          <AccordionItem
-            key={dayKey}
-            value={dayKey}
-            className="border rounded-xl"
-          >
-            <AccordionTrigger className="px-4">
-              <div className="text-left">
-                <p className="font-semibold">Day {idx + 1}</p>
-                <p className="text-sm text-muted-foreground">{day.focus}</p>
-              </div>
-            </AccordionTrigger>
+        {workout?.weekly_schedule &&
+          Object.entries(workout?.weekly_schedule).map(([dayKey, day], idx) => (
+            <AccordionItem
+              key={dayKey}
+              value={dayKey}
+              className="border rounded-xl"
+            >
+              <AccordionTrigger className="px-4">
+                <div className="text-left">
+                  <p className="font-semibold">Day {idx + 1}</p>
+                  <p className="text-sm text-muted-foreground">{day.focus}</p>
+                </div>
+              </AccordionTrigger>
 
-            <AccordionContent className="px-4 pb-4 space-y-3">
-              {day.exercises.map((ex, i) => (
-                <div
-                  key={i}
-                  className="flex justify-between items-center p-3 rounded-lg bg-muted/50"
-                >
-                  <div>
-                    <p
-                      onClick={() => onExerciseClick(ex.name)}
-                      className="font-medium hover:underline cursor-pointer"
-                    >
-                      {ex.name}
-                    </p>
-                    <div className="flex gap-2 mt-1 flex-wrap">
-                      {ex.sets > 0 && (
-                        <Badge variant="secondary">{ex.sets} sets</Badge>
-                      )}
-                      {ex.reps > 0 && (
-                        <Badge variant="secondary">{ex.reps} reps</Badge>
-                      )}
-                      {ex.duration && ex.duration !== "0" && (
-                        <Badge variant="outline">{ex.duration}</Badge>
-                      )}
+              <AccordionContent className="px-4 pb-4 space-y-3">
+                {day.exercises.map((ex, i) => (
+                  <div
+                    key={i}
+                    className="flex justify-between items-center p-3 rounded-lg bg-muted/50"
+                  >
+                    <div>
+                      <p
+                        onClick={() => onExerciseClick(ex.name)}
+                        className="font-medium hover:underline cursor-pointer"
+                      >
+                        {ex.name}
+                      </p>
+                      <div className="flex gap-2 mt-1 flex-wrap">
+                        {ex.sets > 0 && (
+                          <Badge variant="secondary">{ex.sets} sets</Badge>
+                        )}
+                        {ex.reps > 0 && (
+                          <Badge variant="secondary">{ex.reps} reps</Badge>
+                        )}
+                        {ex.duration && ex.duration !== "0" && (
+                          <Badge variant="outline">{ex.duration}</Badge>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
       </Accordion>
     </motion.section>
   );

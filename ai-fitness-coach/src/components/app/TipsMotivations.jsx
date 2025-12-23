@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function TipsMotivations({ tips, motivation }) {
-  console.log(tips, motivation);
   return (
     <div className="space-y-8">
       {/* Motivation */}

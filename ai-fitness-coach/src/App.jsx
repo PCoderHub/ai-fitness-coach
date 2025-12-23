@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import FitnessForm from "./components/app/FitnessForm";
 import { generatePrompt } from "./lib/services/prompt";
 import { generatePlan } from "./lib/services/generatedPlan";
-import { getPlan, savePlan } from "./lib/services/storage";
+import { getPlan, getPlanCacheKey, savePlan } from "./lib/services/storage";
 import DisplayPlan from "./components/app/DisplayPlan";
 import {
   Card,
@@ -33,6 +33,14 @@ function App() {
     }, 300);
 
     try {
+      const cacheKey = getPlanCacheKey(data);
+
+      const cachedPlan = getPlan(cacheKey);
+      if (cachedPlan) {
+        console.log(cachedPlan);
+        setPlan(cachedPlan);
+        return;
+      }
       const prompt = generatePrompt(data);
       const plan = await generatePlan(prompt);
       const textPlan = plan?.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -51,22 +59,13 @@ function App() {
       const jsonString = cleanedText.substring(start, end + 1);
       const finalPlan = JSON.parse(jsonString);
       setPlan(finalPlan);
-      savePlan(finalPlan);
+      savePlan(cacheKey, finalPlan);
     } catch (error) {
       console.error(error);
     } finally {
       setLoadingPlan(false);
     }
   };
-
-  useEffect(() => {
-    const loadPlan = () => {
-      const savedPlan = getPlan();
-      if (savedPlan) setPlan(savedPlan);
-    };
-
-    loadPlan();
-  }, []);
 
   return (
     <main className="relative">
@@ -127,26 +126,28 @@ function App() {
         </motion.div>
       </section>
 
-      <section ref={planSection} className="min-h-screen py-12">
-        {loadingPlan && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <PlanSkeleton />
-          </motion.div>
-        )}
-        {!loadingPlan && plan && (
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <DisplayPlan plan={plan} />
-          </motion.div>
-        )}
-      </section>
+      {(loadingPlan || plan) && (
+        <section ref={planSection} className="min-h-screen py-12">
+          {loadingPlan && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <PlanSkeleton />
+            </motion.div>
+          )}
+          {!loadingPlan && plan && (
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <DisplayPlan plan={plan} />
+            </motion.div>
+          )}
+        </section>
+      )}
     </main>
   );
 }

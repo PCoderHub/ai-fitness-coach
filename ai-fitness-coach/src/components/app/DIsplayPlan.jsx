@@ -90,19 +90,22 @@ function DisplayPlan({ plan }) {
 
               <TabsContent value="workout">
                 <WorkoutPlan
-                  workout={plan.workout_plan}
+                  workout={plan?.workout_plan}
                   onExerciseClick={handleExerciseClick}
                 />
               </TabsContent>
 
               <TabsContent value="diet">
-                <DietPlan diet={plan.diet_plan} onDietClick={handleDietClick} />
+                <DietPlan
+                  diet={plan?.diet_plan}
+                  onDietClick={handleDietClick}
+                />
               </TabsContent>
 
               <TabsContent value="tips">
                 <TipsMotivations
-                  tips={plan.tips}
-                  motivation={plan.motivation}
+                  tips={plan?.tips}
+                  motivation={plan?.motivation}
                 />
               </TabsContent>
             </Tabs>

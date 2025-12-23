@@ -1,8 +1,15 @@
-export const savePlan = (plan) => {
-  localStorage.setItem("fitness_plan", JSON.stringify(plan));
+export const getPlanCacheKey = (formData) => {
+  return `fitness_plan_${JSON.stringify(formData)}`;
 };
 
-export const getPlan = () => {
-  const planData = localStorage.getItem("fitness_plan");
-  return planData ? JSON.parse(planData) : null;
+export const savePlan = (key, plan) => {
+  localStorage.setItem(key, JSON.stringify({ plan }));
+};
+
+export const getPlan = (key) => {
+  const planData = localStorage.getItem(key);
+  if (!planData) return null;
+
+  const { plan } = JSON.parse(planData);
+  return plan;
 };
