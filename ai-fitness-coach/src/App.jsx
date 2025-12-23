@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import FitnessForm from "./components/app/FitnessForm";
 import { generatePrompt } from "./lib/services/prompt";
-import { generatePlan } from "./lib/services/generatedplan";
+import { generatePlan } from "./lib/services/generatedPlan";
 import { getPlan, savePlan } from "./lib/services/storage";
-import DisplayPlan from "./components/app/DIsplayPlan";
+import DisplayPlan from "./components/app/DisplayPlan";
 
 function App() {
   const [plan, setPlan] = useState(null);
