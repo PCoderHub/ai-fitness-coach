@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { formatDietForSpeech } from "@/lib/services/dietText";
 import { generateVoice } from "@/lib/services/generatedVoice";
 
-export default function DietPlan({ diet }) {
+export default function DietPlan({ diet, onDietClick }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   const handleDietRead = async () => {
@@ -37,7 +37,13 @@ export default function DietPlan({ diet }) {
             <h3 className="font-semibold capitalize mb-2">{meal}</h3>
             <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
               {options.map((item, idx) => (
-                <li key={idx}>{item}</li>
+                <li
+                  key={idx}
+                  onClick={() => onDietClick(item)}
+                  className="hover:underline hover:cursor-pointer"
+                >
+                  {item}
+                </li>
               ))}
             </ul>
           </div>

@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { formatWorkoutForSpeech } from "@/lib/services/workoutText";
 import { generateVoice } from "@/lib/services/generatedVoice";
 
-export default function WorkoutPlan({ workout }) {
+export default function WorkoutPlan({ workout, onExerciseClick }) {
   const [openDay, setOpenDay] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
@@ -65,8 +65,10 @@ export default function WorkoutPlan({ workout }) {
                   key={i}
                   className="flex justify-between items-center p-3 rounded-lg bg-gray-50"
                 >
-                  <div onClick={() => {}}>
-                    <p className="font-medium">{ex.name}</p>
+                  <div onClick={() => onExerciseClick(ex.name)}>
+                    <p className="font-medium hover:underline hover:cursor-pointer">
+                      {ex.name}
+                    </p>
                     <p className="text-sm text-gray-500">
                       {ex.sets > 0 && `${ex.sets} sets`}{" "}
                       {ex.reps > 0 && `• ${ex.reps} reps`}{" "}
