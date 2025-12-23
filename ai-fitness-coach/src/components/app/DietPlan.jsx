@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { formatDietForSpeech } from "@/lib/services/dietText";
 import { generateVoice } from "@/lib/services/generatedVoice";
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 export default function DietPlan({ diet, onDietClick }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -22,33 +24,49 @@ export default function DietPlan({ diet, onDietClick }) {
   };
 
   return (
-    <section className="w-full max-w-4xl space-y-6">
-      <Button onClick={handleDietRead} disabled={isSpeaking}>
+    <motion.section
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="space-y-6"
+    >
+      <Button
+        onClick={handleDietRead}
+        disabled={isSpeaking}
+        className="w-full sm:w-fit"
+      >
         {isSpeaking ? "Speaking..." : "🔊 Read Diet Plan"}
       </Button>
-      <div className="p-4 rounded-xl bg-yellow-100">
-        <p className="font-medium">Daily Calorie Focus</p>
-        <p className="text-sm text-gray-700">{diet.daily_calorie_focus}</p>
-      </div>
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <Card className="bg-yellow-50 border">
+        <CardContent className="p-4">
+          <p className="font-medium">Daily Calorie Focus</p>
+          <p className="text-sm text-muted-foreground">
+            {diet.daily_calorie_focus}
+          </p>
+        </CardContent>
+      </Card>
+
+      <div className="grid sm:grid-cols-2 gap-4">
         {Object.entries(diet.meal_plan).map(([meal, options]) => (
-          <div key={meal} className="p-4 rounded-xl border bg-white">
-            <h3 className="font-semibold capitalize mb-2">{meal}</h3>
-            <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+          <Card key={meal}>
+            <CardHeader>
+              <CardTitle className="capitalize">{meal}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
               {options.map((item, idx) => (
-                <li
+                <p
                   key={idx}
                   onClick={() => onDietClick(item)}
-                  className="hover:underline hover:cursor-pointer"
+                  className="cursor-pointer text-sm text-muted-foreground hover:underline"
                 >
                   {item}
-                </li>
+                </p>
               ))}
-            </ul>
-          </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -59,12 +59,7 @@ function FitnessForm({ onSubmit }) {
     fitnessSchema.shape.dietary_preferences.options;
 
   return (
-    <Card className="w-[90%] lg:w-1/2 max-h-[90vh] mx-auto overflow-y-auto">
-      <CardHeader>
-        <CardTitle className="sticky text-2xl font-bold text-center text-indigo-500">
-          Fitness Form
-        </CardTitle>
-      </CardHeader>
+    <Card className="border-none shadow-none">
       <CardContent>
         <form
           id="form-rhf-demo"
@@ -79,12 +74,7 @@ function FitnessForm({ onSubmit }) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    htmlFor="form-rhf-demo-name"
-                    className="text-indigo-500"
-                  >
-                    Name
-                  </FieldLabel>
+                  <FieldLabel htmlFor="form-rhf-demo-name">Name</FieldLabel>
                   <Input
                     {...field}
                     id="form-rhf-demo-name"
@@ -103,12 +93,7 @@ function FitnessForm({ onSubmit }) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    htmlFor="form-rhf-demo-age"
-                    className="text-indigo-500"
-                  >
-                    Age
-                  </FieldLabel>
+                  <FieldLabel htmlFor="form-rhf-demo-age">Age</FieldLabel>
                   <Input
                     {...field}
                     id="form-rhf-demo-age"
@@ -129,12 +114,7 @@ function FitnessForm({ onSubmit }) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    htmlFor="form-rhf-demo-gender"
-                    className="text-indigo-500"
-                  >
-                    Gender
-                  </FieldLabel>
+                  <FieldLabel htmlFor="form-rhf-demo-gender">Gender</FieldLabel>
                   <Select
                     value={field.value}
                     id="form-rhf-demo-gender"
@@ -166,10 +146,7 @@ function FitnessForm({ onSubmit }) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    htmlFor="form-rhf-demo-height"
-                    className="text-indigo-500"
-                  >
+                  <FieldLabel htmlFor="form-rhf-demo-height">
                     Height (cm)
                   </FieldLabel>
                   <Input
@@ -192,10 +169,7 @@ function FitnessForm({ onSubmit }) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    htmlFor="form-rhf-demo-weight"
-                    className="text-indigo-500"
-                  >
+                  <FieldLabel htmlFor="form-rhf-demo-weight">
                     Weight (kg)
                   </FieldLabel>
                   <Input
@@ -218,10 +192,7 @@ function FitnessForm({ onSubmit }) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    htmlFor="form-rhf-demo-fitness_goal"
-                    className="text-indigo-500"
-                  >
+                  <FieldLabel htmlFor="form-rhf-demo-fitness_goal">
                     Fitness Goal
                   </FieldLabel>
                   <Select
@@ -255,10 +226,7 @@ function FitnessForm({ onSubmit }) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    htmlFor="form-rhf-demo-fitness_level"
-                    className="text-indigo-500"
-                  >
+                  <FieldLabel htmlFor="form-rhf-demo-fitness_level">
                     Fitness Level
                   </FieldLabel>
                   <Select
@@ -292,10 +260,7 @@ function FitnessForm({ onSubmit }) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    htmlFor="form-rhf-demo-workout_location"
-                    className="text-indigo-500"
-                  >
+                  <FieldLabel htmlFor="form-rhf-demo-workout_location">
                     Workout Location
                   </FieldLabel>
                   <Select
@@ -329,10 +294,7 @@ function FitnessForm({ onSubmit }) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    htmlFor="form-rhf-demo-dietary_preferences"
-                    className="text-indigo-500"
-                  >
+                  <FieldLabel htmlFor="form-rhf-demo-dietary_preferences">
                     Dietary Preferences
                   </FieldLabel>
                   <Select
@@ -366,10 +328,7 @@ function FitnessForm({ onSubmit }) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    htmlFor="form-rhf-demo-medical_history"
-                    className="text-indigo-500"
-                  >
+                  <FieldLabel htmlFor="form-rhf-demo-medical_history">
                     Medical History
                   </FieldLabel>
                   <InputGroup>
@@ -406,7 +365,7 @@ function FitnessForm({ onSubmit }) {
           <Button type="button" variant="outline" onClick={() => form.reset()}>
             Reset
           </Button>
-          <Button type="submit" form="form-rhf-demo" className="bg-indigo-500">
+          <Button type="submit" form="form-rhf-demo">
             Submit
           </Button>
         </Field>
