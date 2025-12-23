@@ -14,16 +14,23 @@ export const getPlan = (key) => {
   return plan;
 };
 
-// export const getTTSKey = (text) =>
-//   `tts_${btoa(text.substring(0, 100))}`;
+export const getVoiceCacheKey = (text) => `tts_${btoa(text).slice(0, 100)}`;
 
-// export const getCachedTTS = (key) => {
-//   return localStorage.getItem(key);
-// };
+export const blobToBase64 = (blob) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
 
-// export const saveTTS = (key, audioUrl) => {
-//   localStorage.setItem(key, audioUrl);
-// };
+export const getCachedVoice = (key) => {
+  return localStorage.getItem(key);
+};
+
+export const saveVoice = (key, audioUrl) => {
+  localStorage.setItem(key, audioUrl);
+};
 
 export const getCachedImage = (exercise) => {
   return localStorage.getItem(`exercise-img-${exercise}`);

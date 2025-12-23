@@ -12,6 +12,12 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { Badge } from "../ui/badge";
+import {
+  blobToBase64,
+  getCachedVoice,
+  getVoiceCacheKey,
+  saveVoice,
+} from "@/lib/services/storage";
 
 export default function WorkoutPlan({ workout, onExerciseClick }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -21,10 +27,22 @@ export default function WorkoutPlan({ workout, onExerciseClick }) {
       setIsSpeaking(true);
 
       const text = formatWorkoutForSpeech(workout);
-      const audioBlob = await generateVoice(text);
+      const cacheKey = getVoiceCacheKey(text);
+      const cachedAudio = getCachedVoice(cacheKey);
 
-      const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
+      if (cachedAudio) {
+        const audio = new Audio(cachedAudio);
+        audio.play();
+        audio.onended = () => setIsSpeaking(false);
+        return;
+      }
+
+      const audioBlob = await generateVoice(text);
+      const base64Audio = await blobToBase64(audioBlob);
+
+      saveVoice(cacheKey, base64Audio);
+
+      const audio = new Audio(base64Audio);
       audio.play();
 
       audio.onended = () => setIsSpeaking(false);

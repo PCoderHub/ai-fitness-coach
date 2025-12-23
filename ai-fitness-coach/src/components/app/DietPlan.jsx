@@ -4,6 +4,12 @@ import { formatDietForSpeech } from "@/lib/services/dietText";
 import { generateVoice } from "@/lib/services/generatedVoice";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import {
+  blobToBase64,
+  getCachedVoice,
+  getVoiceCacheKey,
+  saveVoice,
+} from "@/lib/services/storage";
 
 export default function DietPlan({ diet, onDietClick }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -12,9 +18,23 @@ export default function DietPlan({ diet, onDietClick }) {
     try {
       setIsSpeaking(true);
       const text = formatDietForSpeech(diet);
+
+      const cacheKey = getVoiceCacheKey(text);
+      const cachedAudio = getCachedVoice(cacheKey);
+
+      if (cachedAudio) {
+        const audio = new Audio(cachedAudio);
+        audio.play();
+        audio.onended = () => setIsSpeaking(false);
+        return;
+      }
+
       const audioBlob = await generateVoice(text);
-      const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
+      const base64Audio = await blobToBase64(audioBlob);
+
+      saveVoice(cacheKey, base64Audio);
+
+      const audio = new Audio(base64Audio);
       audio.play();
       audio.onended = () => setIsSpeaking(false);
     } catch (error) {
