@@ -29,7 +29,7 @@ function DisplayPlan({ plan }) {
 
     try {
       const prompt = `Professional fitness photo of a person performing ${exercise}. Correct posture and form.Full body visible.Neutral gym background.High quality.No text, no watermark.`;
-      const { image } = generateImage({ prompt });
+      const { image } = generateImage({ img: exercise, prompt });
       setImageUrl(image);
     } catch (error) {
       console.error(error);
@@ -47,7 +47,7 @@ function DisplayPlan({ plan }) {
     try {
       const prompt = `High-quality professional food photography.Healthy ${dietItem}.Fresh ingredients.Realistic textures and colors.Served on a clean plate.Top-down or 45-degree angle.Natural lighting.Minimal background.No people.No text.No watermark.`;
 
-      const { image } = generateImage({ prompt });
+      const { image } = generateImage({ img: dietItem, prompt });
       setImageUrl(image);
     } catch (error) {
       console.error(error);

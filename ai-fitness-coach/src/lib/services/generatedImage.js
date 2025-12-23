@@ -1,7 +1,13 @@
-export const generateImage = ({ prompt }) => {
+import { getCachedImage, saveCachedImage } from "./storage";
+
+export const generateImage = ({ img, prompt }) => {
+  const cachedImage = getCachedImage(img);
+  if (cachedImage) return { image: cachedImage };
   const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(
     prompt
   )}?width=1024&height=1024&seed=42`;
+
+  saveCachedImage(img, imageUrl);
 
   return { image: imageUrl };
 };
