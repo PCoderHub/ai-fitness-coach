@@ -1,4 +1,7 @@
 # FitAI - AI Fitness Coach
+---
+
+[Live Link](https://ai-fitness-coach-fitai.netlify.app)
 
 An AI-powered fitness web application that generates personalized workout plans, diet suggestions, exercise images, and voice guidance using modern AI APIs, with smart client-side caching for performance and cost optimization.
 
